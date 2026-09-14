@@ -1,4 +1,5 @@
 export const featuredInsight = {
+  slug: "household-interest-burden-lag",
   category: "가계대출",
   date: "2026. 07. 28",
   title: "금리가 멈춘 뒤에도 가계의 이자 부담은 왜 바로 줄지 않을까",
@@ -11,6 +12,7 @@ export const featuredInsight = {
 
 export const latestArticles = [
   {
+    slug: "housing-recovery-regional-gap",
     category: "부동산",
     title: "거래량이 늘었는데도 지역별 회복 온도가 다른 이유",
     summary:
@@ -19,6 +21,7 @@ export const latestArticles = [
     readingTime: "8분",
   },
   {
+    slug: "won-volatility-three-links",
     category: "금융시장",
     title: "원화 변동성을 키우는 세 개의 연결 고리",
     summary:
@@ -27,6 +30,7 @@ export const latestArticles = [
     readingTime: "10분",
   },
   {
+    slug: "policy-transmission-time-lag",
     category: "정책",
     title: "정책 발표와 실제 체감 사이에 생기는 시간차",
     summary:

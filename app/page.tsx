@@ -86,7 +86,7 @@ export default function Home() {
                 {featuredInsight.summary}
               </p>
               <Link
-                href="/articles"
+                href={`/articles/${featuredInsight.slug}`}
                 className="mt-8 inline-flex items-center gap-2 font-semibold text-accent hover:underline"
               >
                 전체 분석 보기 <ArrowRight aria-hidden="true" size={18} />
@@ -131,7 +131,7 @@ export default function Home() {
                 </div>
                 <p className="text-sm font-semibold text-accent">{article.category}</p>
                 <h3 className="mt-3 text-xl leading-snug font-bold tracking-[-0.025em]">
-                  <Link href="/articles" className="after:absolute after:inset-0 group-hover:text-accent">
+                  <Link href={`/articles/${article.slug}`} className="after:absolute after:inset-0 group-hover:text-accent">
                     {article.title}
                   </Link>
                 </h3>
