@@ -80,6 +80,17 @@ Next.js App Router 기반이며 Vercel에서 별도 빌드 설정 없이 배포�
 
 현재 Article 본문과 수치는 콘텐츠 구조 검증을 위한 프로토타입입니다. 실제 발행 전 원자료와 최신 수치를 다시 검증해야 합니다.
 
+#### Sprint 3 — Dashboard
+
+- `/dashboard`에서 부동산, 대출·금리, 금융시장, 경제지표의 가상 시계열 탐색
+- 주제와 최근 6개월/12개월 필터
+- 재사용 가능한 지표 카드와 Recharts 시계열 차트
+- 월별 비교표, 해석 요약, 다음 관찰 신호
+- 지표별 정의·단위·기간·참고 기관·목업 기준일 표기
+- 데이터는 `data/mock/dashboard.ts`, 타입은 `types/dashboard.ts`에서 관리
+
+Dashboard의 모든 수치는 실제 통계가 아닌 가상 데이터입니다. 출처로 표시된 기관은 향후 원자료를 검증할 곳이며 현재 목업 수치의 생산자가 아닙니다.
+
 ### Important Paths
 
 ```text
@@ -87,14 +98,18 @@ app/
   articles/
     page.tsx             # Articles 목록
     [slug]/page.tsx      # Article 상세, SEO, 정적 경로 생성
+  dashboard/page.tsx     # Dashboard 메타데이터와 작업 화면
 components/
   articles/article-card.tsx
+  dashboard/             # 필터, 지표 카드, 차트, 비교표 화면
 content/
   articles/index.ts      # 로컬 Article 콘텐츠와 조회 함수
 data/
   mock/home.ts           # 홈 목업 데이터
+  mock/dashboard.ts      # Dashboard 가상 시계열
 types/
   article.ts             # Article 도메인 타입
+  dashboard.ts           # Dashboard 데이터 타입
 lib/
   constants/site.ts      # 사이트 이름, URL, 내비게이션
 ```
@@ -104,7 +119,7 @@ lib/
 ```bash
 git clone https://github.com/Hidden-Patterns-Lab/Hidden_Patterns_LAB.git
 cd Hidden_Patterns_LAB
-git switch codex/sprint-2-articles
+git switch codex/sprint-3-dashboard
 npm install
 npm run dev
 ```
@@ -121,10 +136,10 @@ npm run build
 
 - CMS, 데이터베이스, API, 인증, 결제, 분석 도구는 아직 연결하지 않았습니다.
 - Article 검색, 복합 필터, 페이지네이션은 아직 없습니다.
-- Dashboard와 Data Explorer는 준비 중 페이지입니다.
+- Data Explorer는 준비 중 페이지입니다.
 - `npm test` 스크립트는 아직 구성되지 않았습니다.
 - 현재 잠금 파일 설치 시 npm이 의존성 취약점 6건(High 5, Critical 1)을 보고합니다. 무리한 강제 업그레이드 대신 별도 점검이 필요합니다.
 
 ### Next Recommended Sprint
 
-다음 권장 작업은 **Sprint 3 — Dashboard**입니다. 재사용 가능한 차트·지표 카드, 필터, 표, 인사이트, 명확히 표시된 목업 데이터가 범위이며 별도 승인 후 시작합니다.
+다음 권장 작업은 **Sprint 4 — Data Explorer**입니다. `/data`와 `/data/[slug]`, 데이터셋 검색·필터, 메타데이터와 출처가 범위이며 별도 승인 후 시작합니다.
