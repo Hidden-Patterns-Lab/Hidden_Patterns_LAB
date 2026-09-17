@@ -33,6 +33,7 @@ Next.js App Router 기반이며 Vercel에서 별도 빌드 설정 없이 배포�
 ## Project Context
 
 이 문서는 다른 작업 환경에서도 현재 상태를 빠르게 복원하기 위한 인수인계 요약입니다.
+Sprint 1–4의 구현 경계와 배포 메모는 [작업 인수인계](docs/PROJECT_CONTEXT.md)에 정리했습니다.
 
 ### Product
 
@@ -91,6 +92,16 @@ Next.js App Router 기반이며 Vercel에서 별도 빌드 설정 없이 배포�
 
 Dashboard의 모든 수치는 실제 통계가 아닌 가상 데이터입니다. 출처로 표시된 기관은 향후 원자료를 검증할 곳이며 현재 목업 수치의 생산자가 아닙니다.
 
+#### Sprint 4 — Data Explorer
+
+- `/data` 데이터셋 카탈로그와 제목·기관·키워드 검색, 주제·공표 주기 필터
+- `/data/[slug]` 정적 상세 페이지 6개와 개별 SEO 메타데이터
+- 자료 정의, 단위, 지역 범위, 주요 항목, 활용 예, 주의사항, 공식 원천 링크
+- 상세 URL을 `sitemap.xml`에 포함하고 존재하지 않는 slug는 404 처리
+- `content/datasets/index.ts`의 로컬 카탈로그와 `types/dataset.ts`의 타입 정의
+
+이 카탈로그는 원천 자료의 위치와 해석 조건을 안내합니다. 실제 통계 값은 수집·저장·자동 갱신하지 않으며, 원천의 최신 공표일과 이용 조건은 제공 기관에서 다시 확인해야 합니다.
+
 ### Important Paths
 
 ```text
@@ -99,17 +110,23 @@ app/
     page.tsx             # Articles 목록
     [slug]/page.tsx      # Article 상세, SEO, 정적 경로 생성
   dashboard/page.tsx     # Dashboard 메타데이터와 작업 화면
+  data/
+    page.tsx             # 데이터셋 검색·필터 카탈로그
+    [slug]/page.tsx      # 데이터셋 상세, SEO, 정적 경로 생성
 components/
   articles/article-card.tsx
   dashboard/             # 필터, 지표 카드, 차트, 비교표 화면
+  data-explorer/         # 데이터셋 카드와 검색·필터 화면
 content/
   articles/index.ts      # 로컬 Article 콘텐츠와 조회 함수
+  datasets/index.ts      # 데이터셋 메타데이터와 조회 함수
 data/
   mock/home.ts           # 홈 목업 데이터
   mock/dashboard.ts      # Dashboard 가상 시계열
 types/
   article.ts             # Article 도메인 타입
   dashboard.ts           # Dashboard 데이터 타입
+  dataset.ts             # 데이터셋 카탈로그 타입
 lib/
   constants/site.ts      # 사이트 이름, URL, 내비게이션
 ```
@@ -119,7 +136,7 @@ lib/
 ```bash
 git clone https://github.com/Hidden-Patterns-Lab/Hidden_Patterns_LAB.git
 cd Hidden_Patterns_LAB
-git switch codex/sprint-3-dashboard
+git switch codex/sprint-4-data-explorer
 npm install
 npm run dev
 ```
@@ -136,10 +153,10 @@ npm run build
 
 - CMS, 데이터베이스, API, 인증, 결제, 분석 도구는 아직 연결하지 않았습니다.
 - Article 검색, 복합 필터, 페이지네이션은 아직 없습니다.
-- Data Explorer는 준비 중 페이지입니다.
+- Data Explorer의 원자료 다운로드·자동 갱신은 아직 없습니다.
 - `npm test` 스크립트는 아직 구성되지 않았습니다.
 - 현재 잠금 파일 설치 시 npm이 의존성 취약점 6건(High 5, Critical 1)을 보고합니다. 무리한 강제 업그레이드 대신 별도 점검이 필요합니다.
 
 ### Next Recommended Sprint
 
-다음 권장 작업은 **Sprint 4 — Data Explorer**입니다. `/data`와 `/data/[slug]`, 데이터셋 검색·필터, 메타데이터와 출처가 범위이며 별도 승인 후 시작합니다.
+다음 권장 작업은 **Sprint 5 — Premium**입니다. 랜딩·가격·비교 페이지와 인증 자리표시자까지만 범위이며 별도 승인 후 시작합니다.

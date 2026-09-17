@@ -1,7 +1,24 @@
 import type { Metadata } from "next";
-import { PlaceholderPage } from "@/components/shared/placeholder-page";
+import { DatasetCatalog } from "@/components/data-explorer/dataset-catalog";
 
-export const metadata: Metadata = { title: "Data Explorer", description: "신뢰할 수 있는 데이터셋과 메타데이터를 탐색합니다.", alternates: { canonical: "/data" } };
+export const metadata: Metadata = {
+  title: "Data Explorer",
+  description: "경제·금융·부동산·인구 데이터셋의 정의, 공표 주기, 단위, 출처와 해석상 주의사항을 탐색합니다.",
+  alternates: { canonical: "/data" },
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    url: "/data",
+    title: "Data Explorer | Hidden Patterns Lab",
+    description: "데이터의 위치와 해석 조건을 확인하는 데이터셋 카탈로그입니다.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Data Explorer | Hidden Patterns Lab",
+    description: "데이터의 위치와 해석 조건을 확인하는 데이터셋 카탈로그입니다.",
+  },
+};
+
 export default function DataPage() {
-  return <PlaceholderPage eyebrow="Dataset catalog" title="Data Explorer" description="분석에 활용한 공공·경제·시장 데이터셋을 출처, 단위, 주기와 함께 탐색하는 공간을 준비하고 있습니다." />;
+  return <DatasetCatalog />;
 }

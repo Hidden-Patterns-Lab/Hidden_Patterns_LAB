@@ -1,0 +1,133 @@
+import type { DatasetCategory, DatasetFrequency, DatasetRecord } from "@/types/dataset";
+
+export const datasetCategories = ["전체", "경제", "금융", "부동산", "인구·사회"] as const satisfies readonly (DatasetCategory | "전체")[];
+export const datasetFrequencies = ["전체", "수시", "일", "월", "분기", "연"] as const satisfies readonly (DatasetFrequency | "전체")[];
+export const catalogReviewedAt = "2026-09-17";
+
+// This is a source catalog, not an ingested dataset or a live statistical feed.
+export const datasets = [
+  {
+    slug: "bank-of-korea-base-rate",
+    title: "한국은행 기준금리 추이",
+    summary: "금융통화위원회의 정책금리 변경일과 금리 수준을 확인하는 출발점입니다.",
+    category: "금융",
+    frequency: "수시",
+    geography: "전국",
+    unit: "%",
+    provider: "한국은행",
+    source: { label: "한국은행 기준금리 추이", url: "https://www.bok.or.kr/portal/singl/baseRate/list.do?menuNo=200643" },
+    definition: "기준금리 변경일에 공표된 정책금리 수준입니다. 매월 반드시 변경되는 시계열이 아닙니다.",
+    useCases: ["정책금리 전환점 확인", "대출·예금금리와의 전달 시차 비교"],
+    fields: [
+      { name: "변경일자", description: "금리 수준이 적용된 날짜" },
+      { name: "기준금리", description: "해당 변경일의 정책금리 수준(%)" },
+    ],
+    caveats: ["변경이 없는 기간은 새로운 변경일 행이 없을 수 있습니다.", "대출금리와 가계의 실제 이자 부담을 그대로 나타내지는 않습니다."],
+    keywords: ["통화정책", "금리", "한국은행", "기준금리"],
+  },
+  {
+    slug: "household-credit",
+    title: "가계신용",
+    summary: "가계대출과 판매신용을 포함하는 가계신용의 분기별 규모를 살펴봅니다.",
+    category: "금융",
+    frequency: "분기",
+    geography: "전국",
+    unit: "조 원",
+    provider: "한국은행",
+    source: { label: "한국은행 경제통계", url: "https://www.bok.or.kr/portal/submain/submain/sts.do?menuNo=201659" },
+    definition: "가계가 보유한 대출과 판매신용을 함께 보는 총량 통계입니다.",
+    useCases: ["부채 총량의 방향 확인", "금리 변화와 부채 조정의 시차 비교"],
+    fields: [
+      { name: "기준 분기", description: "통계가 가리키는 연도와 분기" },
+      { name: "가계대출", description: "금융기관 등의 가계대출 잔액" },
+      { name: "판매신용", description: "재화·서비스 구매와 관련한 신용 잔액" },
+    ],
+    caveats: ["잠정치와 확정치가 다를 수 있으므로 공표 상태를 확인해야 합니다.", "월별 가계대출 지표와 범위가 같지 않을 수 있습니다."],
+    keywords: ["가계부채", "대출", "가계신용", "한국은행"],
+  },
+  {
+    slug: "apartment-sale-transactions",
+    title: "아파트 매매 실거래 공개자료",
+    summary: "계약일 기준 아파트 매매 신고 내역을 지역·단지·면적 등으로 탐색합니다.",
+    category: "부동산",
+    frequency: "일",
+    geography: "전국 · 지역별",
+    unit: "만원 / ㎡",
+    provider: "국토교통부",
+    source: { label: "실거래가 공개시스템 자료제공", url: "https://rt.molit.go.kr/pt/xls/xls.do" },
+    definition: "신고된 아파트 매매 계약을 계약일 기준으로 공개하는 거래 단위 자료입니다.",
+    useCases: ["지역별 거래 분포 확인", "가격대·전용면적별 거래 구성 비교"],
+    fields: [
+      { name: "계약일", description: "매매 계약이 체결된 날짜" },
+      { name: "지역·단지", description: "시군구·읍면동·아파트 단지 식별 정보" },
+      { name: "전용면적", description: "계약 대상 주택의 전용면적(㎡)" },
+      { name: "거래금액", description: "신고된 매매 금액(만원)" },
+    ],
+    caveats: ["신고 지연, 정정, 해제로 최근 계약 건수와 내용이 바뀔 수 있습니다.", "거래량 공식통계와 집계 기준이 다르므로 동일하게 해석하면 안 됩니다."],
+    keywords: ["주택", "아파트", "매매", "실거래", "국토교통부"],
+  },
+  {
+    slug: "consumer-price-index",
+    title: "소비자물가지수",
+    summary: "소비자가 구입하는 재화·서비스의 가격 변화를 지수로 확인합니다.",
+    category: "경제",
+    frequency: "월",
+    geography: "전국 · 지역별",
+    unit: "지수 (2020=100)",
+    provider: "국가데이터처",
+    source: { label: "KOSIS 소비자물가지수", url: "https://kosis.kr/visual/nsportalStats/detailContents.do?listId=F&statJipyoId=3697&vStatJipyoId=4989" },
+    definition: "기준연도 가격 수준을 100으로 둔 소비자물가의 상대적 수준입니다.",
+    useCases: ["물가 수준과 상승률 구분", "품목별 가격 압력 비교"],
+    fields: [
+      { name: "기준 월", description: "조사 대상 연도와 월" },
+      { name: "소비자물가지수", description: "기준연도 대비 가격 수준" },
+      { name: "전년 동월 대비", description: "1년 전 같은 달과 비교한 변동률" },
+    ],
+    caveats: ["상승률 둔화는 가격 수준 하락과 다릅니다.", "기준연도 개편 시 과거 계열과 비교 방법을 확인해야 합니다."],
+    keywords: ["물가", "인플레이션", "CPI", "국가데이터처", "KOSIS"],
+  },
+  {
+    slug: "exchange-rates",
+    title: "원/달러 환율",
+    summary: "원화와 미국 달러의 교환 비율을 통해 대외 금융 여건을 읽습니다.",
+    category: "금융",
+    frequency: "일",
+    geography: "전국",
+    unit: "원/달러",
+    provider: "한국은행",
+    source: { label: "한국은행 경제통계시스템 ECOS", url: "https://ecos.bok.or.kr/" },
+    definition: "1 미국 달러를 원화로 표시한 환율 계열입니다. 선택하는 고시 시점과 유형에 따라 값이 달라집니다.",
+    useCases: ["원화 가치의 방향 확인", "금리·무역·외국인 자금 흐름과 비교"],
+    fields: [
+      { name: "기준일", description: "환율을 관측한 날짜" },
+      { name: "환율 유형", description: "매매기준율 등 선택한 기준" },
+      { name: "원/달러", description: "달러당 원화 표시 금액" },
+    ],
+    caveats: ["종가, 매매기준율 등 서로 다른 환율 유형을 혼합하면 안 됩니다.", "환율 변화만으로 국내 경제의 원인을 단정할 수 없습니다."],
+    keywords: ["외환", "원화", "달러", "환율", "한국은행"],
+  },
+  {
+    slug: "population-projections",
+    title: "장래인구추계 주요 인구지표",
+    summary: "인구 규모와 연령구조의 장기 경로를 시나리오별로 비교합니다.",
+    category: "인구·사회",
+    frequency: "연",
+    geography: "전국 · 시도별",
+    unit: "명 / %",
+    provider: "국가데이터처",
+    source: { label: "KOSIS 장래인구추계", url: "https://kosis.kr/visual/nsportalStats/detailContents.do?listId=A&statJipyoId=3640&vStatJipyoId=5072" },
+    definition: "출생·사망·이동에 관한 가정을 적용해 산출한 미래 인구의 시나리오별 추정치입니다.",
+    useCases: ["고령화와 생산연령인구 변화 비교", "지역별 장기 수요 가정 검토"],
+    fields: [
+      { name: "추계 연도", description: "미래 인구가 가리키는 연도" },
+      { name: "추계 시나리오", description: "출생·사망·이동 가정의 조합" },
+      { name: "인구·연령계층", description: "전체 또는 연령대별 추계 인구" },
+    ],
+    caveats: ["추계치는 확정된 미래 인구가 아닙니다.", "시나리오와 추계 기준시점이 다른 자료를 직접 비교하면 안 됩니다."],
+    keywords: ["인구", "고령화", "장래인구", "국가데이터처", "KOSIS"],
+  },
+] as const satisfies readonly DatasetRecord[];
+
+export function getDatasetBySlug(slug: string) {
+  return datasets.find((dataset) => dataset.slug === slug);
+}
