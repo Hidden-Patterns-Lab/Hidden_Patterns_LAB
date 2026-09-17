@@ -30,6 +30,8 @@ npm run build
 
 Next.js App Router 기반이며 Vercel에서 별도 빌드 설정 없이 배포할 수 있습니다. 프로덕션 도메인은 `https://www.hiddenpatternslab.com`입니다.
 
+비공개 일일·누적 방문 통계는 [방문 통계 설정 문서](docs/VISITOR_ANALYTICS.md)를 참고하세요. 저장소와 관리자 토큰을 설정하기 전에는 수집하지 않습니다.
+
 ## Project Context
 
 이 문서는 다른 작업 환경에서도 현재 상태를 빠르게 복원하기 위한 인수인계 요약입니다.

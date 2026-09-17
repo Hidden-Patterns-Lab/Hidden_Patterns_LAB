@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { VisitorTracker } from "@/components/analytics/visitor-tracker";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { isVisitorAnalyticsConfigured } from "@/lib/analytics/visitor-stats";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants/site";
 import "./globals.css";
 
@@ -43,6 +45,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {isVisitorAnalyticsConfigured() && <VisitorTracker />}
       </body>
     </html>
   );
